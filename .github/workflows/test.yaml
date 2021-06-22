@@ -1,0 +1,16 @@
+name: GitHub Tests
+on: [push]
+jobs:
+  Tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v2
+      - name: Set up rust
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+      - name: Run Unit tests
+        run: |
+          cargo test
