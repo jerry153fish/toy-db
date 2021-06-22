@@ -1,0 +1,6 @@
+#V2
+abc
+aa
+bb
+exit
+select * from aa;
