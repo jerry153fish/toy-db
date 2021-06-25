@@ -2,6 +2,11 @@ use std::env;
 use rustyline::error::ReadlineError;
 use rustyline::Editor;
 
+// use sqlparser::ast::Statement;
+use sqlparser::dialect::MySqlDialect;
+use sqlparser::parser::Parser;
+// use sqlparser::tokenizer::Tokenizer;
+
 enum MetaCommand {
     Exit,
     Unknown(String),
@@ -58,14 +63,12 @@ fn handle_meta_command(cmd: MetaCommand) {
     }
 }
 
-fn process_command(cmd: DbCommand) {
-    match cmd {
-        DbCommand::Insert(cmd) => println!("Insert db command {}", cmd),
-        DbCommand::Delete(cmd) => println!("Delete db command {}", cmd),
-        DbCommand::Update(cmd) => println!("Update db command {}", cmd),
-        DbCommand::CreateTable(cmd) => println!("Create table command {}", cmd),
-        DbCommand::Select(cmd) => println!("select db command {}", cmd),
-        DbCommand::Unknown(cmd) => println!("Unknowm db command {}", cmd),
+fn process_command(cmd: &String) {
+    let dialect = MySqlDialect {};
+    let statements = &Parser::parse_sql(&dialect, cmd).unwrap();
+
+    for s in statements {
+        println!("{:?}", s);
     }
 }
 
@@ -86,7 +89,7 @@ fn main() {
                 rl.add_history_entry(line.as_str());
                 match get_command_type(&line) {
                     CommandType::DbCommand(_cmd) => {
-                        process_command(_cmd);
+                        process_command(&line);
                     }
                     CommandType::MetaCommand(cmd) => {
                         handle_meta_command(cmd);

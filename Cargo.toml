@@ -8,3 +8,4 @@ authors = ["Jerry Chen <jerry153fish@gmail.com>"]
 
 [dependencies]
 rustyline = "8.2.0"
+sqlparser = "0.9.0"
