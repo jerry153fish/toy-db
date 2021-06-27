@@ -7,7 +7,7 @@ use command::{get_command_type, handle_meta_command, process_command, CommandTyp
 mod command;
 
 fn main() {
-    let args: Vec<String> = env::args().collect();
+    let _args: Vec<String> = env::args().collect();
 
     let mut rl = Editor::<()>::new();
 

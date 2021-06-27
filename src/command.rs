@@ -1,5 +1,6 @@
 use sqlparser::dialect::MySqlDialect;
 use sqlparser::parser::Parser;
+use sqlparser::ast::Statement;
 
 #[derive(PartialEq, Debug)]
 pub enum MetaCommand {
@@ -43,10 +44,70 @@ pub fn process_command(cmd: &String) {
     match statements {
         Ok(_sts) => {
             for s in _sts {
-                println!("{:?}", s);
+                parse_db_command(s);
             }
         }
         Err(_err) => println!("Can not parse command {}", cmd),
+    }
+}
+
+fn parse_db_command(s: &Statement) {
+    match s {
+        Statement::Query (_query) => {
+            println!("{:?}", _query);
+        }
+        Statement::Insert { .. } => {
+            println!("{:?}", s);
+        }
+        Statement::Copy { .. } => {
+            println!("{:?}", s);
+        }
+        Statement::Update { .. } => {
+            println!("{:?}", s);
+        }
+        Statement::Delete { .. } => {
+            println!("{:?}", s);
+        }
+        Statement::CreateView { .. } => {
+            println!("{:?}", s);
+        }
+        Statement::CreateTable { .. } => {
+            println!("{:?}", s);
+        }
+        Statement::AlterTable { .. } => {
+            println!("{:?}", s);
+        }
+        Statement::Drop { .. } => {
+            println!("{:?}", s);
+        },
+        Statement::SetVariable { .. } => {
+            println!("{:?}", s);
+        },
+        Statement::ShowVariable { .. } => {
+            println!("{:?}", s);
+        },
+        Statement::ShowColumns { .. } => {
+            println!("{:?}", s);
+        },
+        Statement::StartTransaction { modes } => {
+            println!("{:?}", modes);
+        }
+        Statement::SetTransaction { modes } => {
+            println!("{:?}", modes);
+        }
+        Statement::Commit {
+            chain
+        } => {
+            println!("{:?}", chain)
+        }
+        Statement::Rollback {
+            chain
+        } => {
+            println!("{:?}", chain)
+        }
+        _ => {
+            println!("Not valid query");
+        }
     }
 }
 
