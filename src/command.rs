@@ -1,6 +1,7 @@
 use sqlparser::dialect::MySqlDialect;
 use sqlparser::parser::Parser;
 
+#[derive(PartialEq, Debug)]
 pub enum MetaCommand {
     Exit,
     Unknown(String),
@@ -15,6 +16,7 @@ impl MetaCommand {
     }
 }
 
+#[derive(PartialEq, Debug)]
 pub enum CommandType {
     MetaCommand(MetaCommand),
     DbCommand(String),
@@ -45,5 +47,29 @@ pub fn process_command(cmd: &String) {
             }
         }
         Err(_err) => println!("Can not parse command {}", cmd),
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    // Note this useful idiom: importing names from outer (for mod tests) scope.
+    use super::*;
+
+    #[test]
+    fn test_exit_command() {
+        let cmd = String::from(".exit");
+
+        let result : CommandType = get_command_type(&cmd); 
+
+        assert_eq!(CommandType::MetaCommand(MetaCommand::Exit), result);
+    }
+
+    #[test]
+    fn test_db_command() {
+        let cmd = String::from("select");
+
+        let result : CommandType = get_command_type(&cmd); 
+
+        assert_eq!(CommandType::DbCommand(cmd), result);
     }
 }
