@@ -2,6 +2,8 @@ use sqlparser::dialect::MySqlDialect;
 use sqlparser::parser::Parser;
 use sqlparser::ast::Statement;
 
+use crate::parser::insert::InsertParser;
+
 #[derive(PartialEq, Debug)]
 pub enum MetaCommand {
     Exit,
@@ -58,6 +60,8 @@ fn parse_db_command(s: &Statement) {
         }
         Statement::Insert { .. } => {
             println!("{:?}", s);
+            let aa = InsertParser::new(s);
+            println!("{:?}", aa);
         }
         Statement::Copy { .. } => {
             println!("{:?}", s);
