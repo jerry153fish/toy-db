@@ -1,13 +1,12 @@
-use std::env;
 use rustyline::error::ReadlineError;
 use rustyline::Editor;
+use std::env;
 
-use command::{CommandType, get_command_type, handle_meta_command, process_command};
+use command::{get_command_type, handle_meta_command, process_command, CommandType};
 
 mod command;
 
 fn main() {
-
     let args: Vec<String> = env::args().collect();
 
     println!("{:?}", args);
@@ -29,18 +28,18 @@ fn main() {
                         handle_meta_command(cmd);
                     }
                 }
-            },
+            }
             Err(ReadlineError::Interrupted) => {
                 println!("CTRL-C");
-                break
-            },
+                break;
+            }
             Err(ReadlineError::Eof) => {
                 println!("CTRL-D");
-                break
-            },
+                break;
+            }
             Err(err) => {
                 println!("Error: {:?}", err);
-                break
+                break;
             }
         }
     }

@@ -43,7 +43,7 @@ pub fn process_command(cmd: &String) {
             for s in _sts {
                 println!("{:?}", s);
             }
-        },
+        }
         Err(_err) => println!("Can not parse command {}", cmd),
     }
 }
