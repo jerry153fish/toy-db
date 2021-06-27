@@ -1,13 +1,14 @@
 use rustyline::error::ReadlineError;
 use rustyline::Editor;
 use std::env;
-
 use command::{get_command_type, handle_meta_command, process_command, CommandType};
 
+mod parser;
 mod command;
 
+
 fn main() {
-    let args: Vec<String> = env::args().collect();
+    let _args: Vec<String> = env::args().collect();
 
     let mut rl = Editor::<()>::new();
 
