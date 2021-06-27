@@ -67,3 +67,30 @@ fn get_values_from_source(query: &Box<Query>) -> Vec<Vec<String>> {
 
     return all_vals;
 }
+
+#[cfg(test)]
+mod tests {
+    // Note this useful idiom: importing names from outer (for mod tests) scope.
+    use super::*;
+    use sqlparser::dialect::MySqlDialect;
+    use sqlparser::parser::Parser;
+    use sqlparser::ast::Statement;
+
+    #[test]
+    fn test_insert_parser() {
+        let cmd = String::from("insert into table1 (col1, col2) values(1, 2);");
+        let dialect = MySqlDialect {};
+        let statements = &Parser::parse_sql(&dialect, &cmd).unwrap();
+
+        let result = InsertParser {
+            table_name: String::from("table1"),
+            columns: vec![String::from("col1"), String::from("col2")],
+            values: vec![vec!["1".to_string(), "2".to_string()]]
+        };
+
+        for s in statements {
+            let expect  = InsertParser::new(s).unwrap();
+            assert_eq!(result, expect);
+        }
+    }
+}
