@@ -11,6 +11,9 @@ jobs:
         uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
+      - name: Setup fmt
+        run: rustup component add rustfmt
       - name: Run Unit tests
         run: |
+          cargo build
           cargo test
