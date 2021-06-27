@@ -9,12 +9,8 @@ mod command;
 fn main() {
     let args: Vec<String> = env::args().collect();
 
-    println!("{:?}", args);
-    // `()` can be used when no completer is required
     let mut rl = Editor::<()>::new();
-    // if rl.load_history("history.txt").is_err() {
-    //     println!("No previous history.");
-    // }
+
     loop {
         let readline = rl.readline("toy_db >> ");
         match readline {
@@ -43,5 +39,4 @@ fn main() {
             }
         }
     }
-    // rl.save_history("history.txt").unwrap();
 }
